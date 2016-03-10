@@ -1,6 +1,6 @@
 ﻿namespace YoutubeDownloader
 {
-	partial class frmMain
+	partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.txtUrl = new System.Windows.Forms.TextBox();
             this.btnDownload = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.bwMain = new System.ComponentModel.BackgroundWorker();
             this.lblDestination = new System.Windows.Forms.Label();
             this.txtDestination = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.btnDestination = new System.Windows.Forms.Button();
+            this.niWinYDL = new System.Windows.Forms.NotifyIcon(this.components);
             this.clipboardMonitor1 = new YoutubeDownloader.ClipboardMonitor();
             this.SuspendLayout();
             // 
@@ -74,11 +74,11 @@
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 3;
             // 
-            // backgroundWorker1
+            // bwMain
             // 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.bwMain.WorkerReportsProgress = true;
+            this.bwMain.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.bwMain.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             // 
             // lblDestination
             // 
@@ -96,23 +96,23 @@
             this.txtDestination.Size = new System.Drawing.Size(337, 20);
             this.txtDestination.TabIndex = 5;
             // 
-            // button1
+            // btnDestination
             // 
-            this.button1.Location = new System.Drawing.Point(423, 42);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnDestination.Location = new System.Drawing.Point(423, 42);
+            this.btnDestination.Name = "btnDestination";
+            this.btnDestination.Size = new System.Drawing.Size(75, 23);
+            this.btnDestination.TabIndex = 6;
+            this.btnDestination.Text = "...";
+            this.btnDestination.UseVisualStyleBackColor = true;
+            this.btnDestination.Click += new System.EventHandler(this.button1_Click);
             // 
-            // notifyIcon1
+            // niWinYDL
             // 
-            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
+            this.niWinYDL.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.niWinYDL.Icon = ((System.Drawing.Icon)(resources.GetObject("niWinYDL.Icon")));
+            this.niWinYDL.Text = "notifyIcon1";
+            this.niWinYDL.Visible = true;
+            this.niWinYDL.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
             // 
             // clipboardMonitor1
             // 
@@ -124,20 +124,20 @@
             this.clipboardMonitor1.Text = "clipboardMonitor1";
             this.clipboardMonitor1.Visible = false;
             // 
-            // Form1
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(510, 261);
             this.Controls.Add(this.clipboardMonitor1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnDestination);
             this.Controls.Add(this.txtDestination);
             this.Controls.Add(this.lblDestination);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnDownload);
             this.Controls.Add(this.txtUrl);
-            this.Name = "Form1";
+            this.Name = "FrmMain";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -151,12 +151,12 @@
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker bwMain;
         private System.Windows.Forms.Label lblDestination;
         private System.Windows.Forms.TextBox txtDestination;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnDestination;
         private ClipboardMonitor clipboardMonitor1;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.NotifyIcon niWinYDL;
 
     }
 }

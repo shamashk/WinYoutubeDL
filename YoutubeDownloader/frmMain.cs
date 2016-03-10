@@ -1,21 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using YoutubeDownloader.Properties;
 
 namespace YoutubeDownloader
 {
-	public partial class frmMain : Form
+	public partial class FrmMain : Form
     {
-		public frmMain()
+		public FrmMain()
         {
             InitializeComponent();
             clipboardMonitor1.ClipboardChanged += clipboardMonitor1_ClipboardChanged;
         }
 
-        private bool onClipBoardDownload = false;
+        private bool OnClipBoardDownload;
         void clipboardMonitor1_ClipboardChanged(object sender, ClipboardChangedEventArgs e)
         {
             var cliptext = Clipboard.GetText();
@@ -23,9 +22,9 @@ namespace YoutubeDownloader
             {
                 if (CheckIfUrl(cliptext) && cliptext.ToLower().Contains("youtube"))
                 {
-                    notifyIcon1.BalloonTipText = "Click here to download " + cliptext;
-                    onClipBoardDownload = true;
-                    notifyIcon1.ShowBalloonTip(3000);
+                    niWinYDL.BalloonTipText = Resources.FrmMain_clipboardMonitor1_ClipboardChanged_Click_here_to_download_ + cliptext;
+                    OnClipBoardDownload = true;
+                    niWinYDL.ShowBalloonTip(3000);
 
                 }
             }
@@ -48,7 +47,7 @@ namespace YoutubeDownloader
         {
             if (string.IsNullOrEmpty(txtUrl.Text)) return;
 
-            backgroundWorker1.RunWorkerAsync();
+            bwMain.RunWorkerAsync();
         }
 
         private bool CheckIfUrl(string uriName)
@@ -85,14 +84,14 @@ namespace YoutubeDownloader
             {
                 var line = proc.StandardOutput.ReadLine();
                 // do something with line
-                backgroundWorker1.ReportProgress(i++, line);
+                bwMain.ReportProgress(i++, line);
             }
 
-            if (onClipBoardDownload)
+            if (OnClipBoardDownload)
             {
-                onClipBoardDownload = false;
-                notifyIcon1.BalloonTipText = "File downloaded";
-                notifyIcon1.ShowBalloonTip(2000);
+                OnClipBoardDownload = false;
+                niWinYDL.BalloonTipText = Resources.FrmMain_RunDownloader_File_downloaded;
+                niWinYDL.ShowBalloonTip(2000);
             }
         }
 
@@ -122,20 +121,20 @@ namespace YoutubeDownloader
         private int GetPercentFromString(string str)
         {
             var words = str.Split(' ');
-            var percentage = 0;
+            double percentage = 0.0;
             foreach (var word in words)
             {
-                if (word.EndsWith("%") && int.TryParse(word.Substring(0, word.Length - 1), out percentage))
+                if (word.EndsWith("%") && double.TryParse(word.Substring(0, word.Length - 1), out percentage))
                     break;
             }
 
-            return percentage;
+            return (int)percentage;
         }
 
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
-            if(!onClipBoardDownload) return;
-            ;
+            if(!OnClipBoardDownload) return;
+            
             var cliptext = Clipboard.GetText();
             if (!string.IsNullOrEmpty(cliptext))
             {

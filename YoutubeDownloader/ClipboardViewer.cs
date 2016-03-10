@@ -1,34 +1,33 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace YoutubeDownloader
 {
-
     // Must inherit Control, not Component, in order to have Handle
     [DefaultEvent("ClipboardChanged")]
-    public partial class ClipboardMonitor : Control
+    public class ClipboardMonitor : Control
     {
-        IntPtr nextClipboardViewer;
+        private IntPtr nextClipboardViewer;
 
         public ClipboardMonitor()
         {
-            this.BackColor = Color.Red;
-            this.Visible = false;
+            BackColor = Color.Red;
+            Visible = false;
 
-            nextClipboardViewer = (IntPtr)SetClipboardViewer((int)this.Handle);
+            nextClipboardViewer = (IntPtr) SetClipboardViewer((int) Handle);
         }
 
         /// <summary>
-        /// Clipboard contents changed.
+        ///     Clipboard contents changed.
         /// </summary>
         public event EventHandler<ClipboardChangedEventArgs> ClipboardChanged;
 
         protected override void Dispose(bool disposing)
         {
-            ChangeClipboardChain(this.Handle, nextClipboardViewer);
+            ChangeClipboardChain(Handle, nextClipboardViewer);
         }
 
         [DllImport("User32.dll")]
@@ -40,7 +39,7 @@ namespace YoutubeDownloader
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SendMessage(IntPtr hwnd, int wMsg, IntPtr wParam, IntPtr lParam);
 
-        protected override void WndProc(ref System.Windows.Forms.Message m)
+        protected override void WndProc(ref Message m)
         {
             // defined in winuser.h
             const int WM_DRAWCLIPBOARD = 0x308;
@@ -66,16 +65,15 @@ namespace YoutubeDownloader
             }
         }
 
-        void OnClipboardChanged()
+        private void OnClipboardChanged()
         {
             try
             {
-                IDataObject iData = Clipboard.GetDataObject();
+                var iData = Clipboard.GetDataObject();
                 if (ClipboardChanged != null)
                 {
                     ClipboardChanged(this, new ClipboardChangedEventArgs(iData));
                 }
-
             }
             catch (Exception e)
             {

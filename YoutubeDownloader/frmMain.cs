@@ -6,26 +6,27 @@ using YoutubeDownloader.Properties;
 
 namespace YoutubeDownloader
 {
-	public partial class FrmMain : Form
+    public partial class FrmMain : Form
     {
-		public FrmMain()
+        private bool OnClipBoardDownload;
+
+        public FrmMain()
         {
             InitializeComponent();
             clipboardMonitor1.ClipboardChanged += clipboardMonitor1_ClipboardChanged;
         }
 
-        private bool OnClipBoardDownload;
-        void clipboardMonitor1_ClipboardChanged(object sender, ClipboardChangedEventArgs e)
+        private void clipboardMonitor1_ClipboardChanged(object sender, ClipboardChangedEventArgs e)
         {
             var cliptext = Clipboard.GetText();
             if (!string.IsNullOrEmpty(cliptext))
             {
                 if (CheckIfUrl(cliptext) && cliptext.ToLower().Contains("youtube"))
                 {
-                    niWinYDL.BalloonTipText = Resources.FrmMain_clipboardMonitor1_ClipboardChanged_Click_here_to_download_ + cliptext;
+                    niWinYDL.BalloonTipText =
+                        Resources.FrmMain_clipboardMonitor1_ClipboardChanged_Click_here_to_download_ + cliptext;
                     OnClipBoardDownload = true;
                     niWinYDL.ShowBalloonTip(3000);
-
                 }
             }
         }
@@ -121,20 +122,20 @@ namespace YoutubeDownloader
         private int GetPercentFromString(string str)
         {
             var words = str.Split(' ');
-            double percentage = 0.0;
+            var percentage = 0.0;
             foreach (var word in words)
             {
                 if (word.EndsWith("%") && double.TryParse(word.Substring(0, word.Length - 1), out percentage))
                     break;
             }
 
-            return (int)percentage;
+            return (int) percentage;
         }
 
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
-            if(!OnClipBoardDownload) return;
-            
+            if (!OnClipBoardDownload) return;
+
             var cliptext = Clipboard.GetText();
             if (!string.IsNullOrEmpty(cliptext))
             {
@@ -145,7 +146,6 @@ namespace YoutubeDownloader
             }
 
             btnDownload_Click(null, new EventArgs());
-
         }
     }
 }
